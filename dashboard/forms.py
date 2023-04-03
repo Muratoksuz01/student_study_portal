@@ -1,5 +1,7 @@
 from django import forms
 from . import models
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 
 class NotesForm(forms.ModelForm):
     class Meta:
@@ -13,6 +15,9 @@ class HomeworkForm(forms.ModelForm):
         model=models.Homework
         widgets={"due":DateInput}
         fields=["subject","title","description","due","is_finished"]
+    def __init__(self, *args, **kwargs):#burası requred i false yapmak için 
+        super(HomeworkForm, self).__init__(*args, **kwargs)
+        self.fields['description'].required = False
 
 class DashboardForm(forms.Form):
     text=forms.CharField(max_length=200,label="Enter Youtube Search:")
@@ -21,3 +26,38 @@ class TodoForm(forms.ModelForm):
     class Meta:
         model=models.Todo
         fields=["title","is_finished"]
+
+class ConvarsionForm(forms.Form):#sayfaya girince length ve mass geliyor RadioSelect olarak ona göre işlem  var
+    CHOICES=[("length","Length"),("mass","Mass")]
+    measurement=forms.ChoiceField(choices=CHOICES,widget=forms.RadioSelect)
+
+class ConversionLengthForm (forms. Form):
+    CHOICES = [('yard', 'Yard'), ('foot', 'Foot')]
+    input = forms.CharField(required=False, label=False,widget=forms.TextInput (
+    attrs = {'type': 'number', 'placeholder': 'Enter the Number'}
+    ))
+    measure1 = forms.CharField(
+    label='',widget = forms.Select (choices = CHOICES)
+    )
+    measure2 = forms.CharField(
+    label='',widget = forms.Select (choices = CHOICES)
+    )
+
+class ConversionMassForm (forms. Form):
+    CHOICES = [('pound', 'Pound'), ('kilogram', 'Kilogram')]
+    input = forms.CharField(required=False, label=False,widget=forms.TextInput (
+    attrs = {'type': 'number', 'placeholder': 'Enter the Number'}
+    ))
+    measure1 = forms.CharField(
+    label='',widget = forms.Select (choices = CHOICES)
+    )
+    measure2 = forms.CharField(
+    label='',widget = forms.Select (choices = CHOICES)
+    )
+
+class UserRegisterForm(UserCreationForm):
+    class Meta:
+        model=User
+        fields=["username","password1","password2"]
+
+

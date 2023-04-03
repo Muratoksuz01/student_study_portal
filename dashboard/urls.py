@@ -15,9 +15,16 @@ urlpatterns = [
 
     path("todo/",views.todo,name="todo"),
     path("delete_todo/<int:pk>",views.delete_todo,name="delete_todo"),
+    path("update_todo/<int:pk>",views.update_todo,name="update_todo"),
 
     path("book/",views.book,name="book"),
     
+    path("dictionary/",views.dictionary,name="dictionary"),
+    
+
+    path("wiki/",views.wiki,name="wiki"),
+
+    path("conversion/",views.conversion,name="conversion"),
 
 
 
